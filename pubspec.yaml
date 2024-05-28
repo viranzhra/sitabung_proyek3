@@ -68,6 +68,7 @@ flutter:
       - data/icon_plus.png
       - data/icon_beranda.png
       - data/icon_riwayat.png
+      - data/sm.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

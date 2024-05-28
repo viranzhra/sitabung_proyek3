@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'beranda.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Aduan());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Aduan extends StatelessWidget {
+  const Aduan({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.indigo[900],
-          leading: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 15,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false,
+              );
+            },
           ),
           title: Text(
             'ADUAN',
-            style: TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
         body: Center(

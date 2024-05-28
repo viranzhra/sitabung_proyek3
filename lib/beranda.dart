@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'riwayattransaksi.dart';
+import 'aduan.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
+      routes: {
+        "/riwayattransaksi": (context) => TransactionHistory(),
+        "/aduan": (context) => Aduan(),
+      },
     );
   }
 }
@@ -21,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isHidden = true;
+  // ignore: unused_field
   int _selectedIndex = 0;
 
   void _toggleVisibility() {
@@ -208,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'data/abu.jpg', // Ubah dengan path gambar sesuai kebutuhan
+                            'data/sm.jpg', // Ubah dengan path gambar sesuai kebutuhan
                             fit: BoxFit.cover, // Sesuaikan dengan kebutuhan Anda
                           ),
                         ),
@@ -250,7 +257,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Aksi saat ikon riwayat diklik
+                    print("riwayat di klik");
+                    Navigator.pushNamed(context, "/riwayattransaksi");
                   },
                   child: Image.asset(
                     'data/icon_riwayat.png', // Ganti dengan path gambar ikon riwayat
@@ -270,7 +278,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Aksi saat ikon aduan diklik
+                    print("aduan di klik");
+                    Navigator.pushNamed(context, "/aduan");
                   },
                   child: Image.asset(
                     'data/icon_aduan.png', // Ganti dengan path gambar ikon aduan

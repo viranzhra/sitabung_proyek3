@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'beranda.dart';
 
 void main() {
   runApp(TransactionHistory());
@@ -8,6 +9,7 @@ class TransactionHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF1C1F71),
@@ -20,7 +22,13 @@ class TransactionHistory extends StatelessWidget {
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                (route) => false,
+              );
+            },
           ),
         ),
         body: SingleChildScrollView(
@@ -54,7 +62,7 @@ class TransactionHistory extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
-          colors: [Color(0xFF1C1F71), Color(0xFF6ED4FF)],
+          colors: [Colors.blue[200]!, Colors.blue[800]!],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -99,7 +107,7 @@ class TransactionHistory extends StatelessWidget {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(color: Colors.white),
       ),
       margin: EdgeInsets.symmetric(vertical: 2),
