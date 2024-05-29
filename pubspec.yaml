@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^2.2.0
+  file_picker: ^5.2.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,6 +63,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/images/logonew.png
+      - assets/images/panah_atas.png
+      - assets/images/panah_bawah.png
       - data/abu.jpg
       - data/logo_sitabung1.png
       - data/icon_aduan.png
