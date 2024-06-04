@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: CircleAvatar(
               // Icon profile (avatar)
               radius: 25,
-              backgroundImage: AssetImage('data/logo_sitabung1.png'), // Ubah dengan path gambar foto Anda
+              backgroundImage: AssetImage('data/abu.jpg'), // Ubah dengan path gambar foto Anda
             ),
             onPressed: () {
               // Aksi saat avatar diklik
@@ -228,80 +228,145 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(255, 171, 169, 169).withOpacity(0.5), // Warna shadow
-              spreadRadius: 5, // Jarak shadow
-              blurRadius: 7, // Tingkat kabur shadow
-              offset: Offset(0, 3), // Offset shadow
-            ),
-          ],
-        ),
-        child: BottomAppBar(
-          color: Color.fromARGB(255, 255, 255, 255),
-          child: Container(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  decoration: BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: const Color.fromARGB(255, 171, 169, 169).withOpacity(0.5), // Warna shadow
+        spreadRadius: 5, // Jarak shadow
+        blurRadius: 7, // Tingkat kabur shadow
+        offset: Offset(0, 3), // Offset shadow
+      ),
+    ],
+  ),
+  child: BottomAppBar(
+    color: Color.fromARGB(255, 255, 255, 255),
+    child: Container(
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () {
+              print("Icon plus di klik");
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    print("Icon plus di klik");
-                  },
-                  child: Image.asset(
-                    'data/icon_plus.png',
-                    width: 50, 
-                    height: 50, 
-                  ),
+                Image.asset(
+                  'data/icon_plus.png',
+                  width: 30, 
+                  height: 30, 
                 ),
-                GestureDetector(
-                  onTap: () {
-                    print("riwayat di klik");
-                    Navigator.pushNamed(context, "/riwayattransaksi");
-                  },
-                  child: Image.asset(
-                    'data/icon_riwayat.png', // Ganti dengan path gambar ikon riwayat
-                    width: 50, // Atur lebar ikon
-                    height: 50, // Atur tinggi ikon
-                  ),
+                Text(
+                "Plus",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 100, 98, 98),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    // Aksi saat ikon beranda diklik
-                  },
-                  child: Image.asset(
-                    'data/icon_beranda.png', // Ganti dengan path gambar ikon beranda
-                    width: 50, // Atur lebar ikon
-                    height: 50, // Atur tinggi ikon
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    print("aduan di klik");
-                    Navigator.pushNamed(context, "/aduan");
-                  },
-                  child: Image.asset(
-                    'data/icon_aduan.png', // Ganti dengan path gambar ikon aduan
-                    width: 50, // Atur lebar ikon
-                    height: 50, // Atur tinggi ikon
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Aksi saat foto profile (avatar) diklik
-                  },
-                  child: CircleAvatar(
-                    // Icon profile (avatar)
-                    radius: 20,
-                    backgroundImage: AssetImage('data/logo_sitabung1.png'), // Ubah dengan path gambar foto Anda
-                  ),
-                ),
+              ),
               ],
             ),
           ),
-        ),
+          GestureDetector(
+            onTap: () {
+              print("riwayat di klik");
+              Navigator.pushNamed(context, "/riwayattransaksi");
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'data/icon_riwayat.png', // Ganti dengan path gambar ikon riwayat
+                  width: 30, // Atur lebar ikon
+                  height: 30, // Atur tinggi ikon
+                ),
+                Text(
+                "Riwayat",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 100, 98, 98),
+                ),
+              ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              // Aksi saat ikon beranda diklik
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'data/icon_beranda.png', // Ganti dengan path gambar ikon beranda
+                  width: 30, // Atur lebar ikon
+                  height: 30, // Atur tinggi ikon
+                ),
+                Text(
+                "Beranda",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 100, 98, 98),
+                ),
+              ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("aduan di klik");
+              Navigator.pushNamed(context, "/aduan");
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'data/icon_aduan.png', // Ganti dengan path gambar ikon aduan
+                  width: 30, // Atur lebar ikon
+                  height: 30, // Atur tinggi ikon
+                ),
+                Text(
+                "Aduan",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 100, 98, 98),
+                ),
+              ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              // Aksi saat foto profile (avatar) diklik
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  // Icon profile (avatar)
+                  radius: 15,
+                  backgroundImage: AssetImage('assets/images/orang1.jpg'), // Ubah dengan path gambar foto Anda
+                ),
+                Text(
+                "Profil",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 100, 98, 98),
+                ),
+              ),
+              ],
+            ),
+          ),
+        ],
       ),
+    ),
+  ),
+),
     );
   }
 }
