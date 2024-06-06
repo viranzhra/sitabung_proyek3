@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'riwayattransaksi.dart';
+import 'dart:convert';
 import 'aduan.dart';
+import 'package:http/http.dart' as http;
+
+import 'profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +19,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/riwayattransaksi": (context) => TransactionHistory(),
         "/aduan": (context) => Aduan(),
+        "/beranda": (context) => HomeScreen(),
+        "/profile": (context) => ProfileCard(),
       },
     );
   }
@@ -27,8 +33,42 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isHidden = true;
-  // ignore: unused_field
-  int _selectedIndex = 0;
+  String _nama = "Loading...";
+  int _total = 0;
+  String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.148.138/api_sitabung/beranda.php'), // Sesuaikan dengan alamat API Anda
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'username': 'vira', 'password': 'password123'}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          _nama = data['nama'];
+          _total = data['total'];
+          _errorMessage = '';
+        });
+      } else {
+        setState(() {
+          _errorMessage = 'Error: ${response.statusCode} ${response.reasonPhrase}';
+        });
+      }
+    } catch (error) {
+      setState(() {
+        _errorMessage = 'Error: $error';
+      });
+    }
+  }
 
   void _toggleVisibility() {
     setState(() {
@@ -41,28 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 234, 234, 234),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 234, 234, 234), // Sesuaikan warna background dengan body
-        // title: Text('Aplikasi Saya'),
+        backgroundColor: Color.fromARGB(255, 234, 234, 234),
         actions: [
           IconButton(
             icon: CircleAvatar(
-              // Icon profile (avatar)
               radius: 25,
-              backgroundImage: AssetImage('data/abu.jpg'), // Ubah dengan path gambar foto Anda
+              backgroundImage: AssetImage('data/abu.jpg'),
             ),
-            onPressed: () {
-              // Aksi saat avatar diklik
-            },
+            onPressed: () {},
           ),
         ],
       ),
-
       body: ListView(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Tampilan teks bagian atas
               Text(
                 "Selamat Datang!",
                 style: TextStyle(
@@ -71,15 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                "VIRA NUR ZAHRA",
+                _nama,
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20), // Memberikan jarak
-
-              // Tampilan pencarian
+              SizedBox(height: 20),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
@@ -111,8 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: 20),
-
-              // Tampilan angka rupiah
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 padding: EdgeInsets.all(10),
@@ -142,23 +172,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             TextSpan(text: 'Rp. '),
                             _isHidden
                                 ? TextSpan(text: '*******')
-                                : TextSpan(text: '500.000'),
+                                : TextSpan(text: _total.toString()),
                           ],
                         ),
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        _toggleVisibility();
-                      },
-                      icon: Icon(_isHidden ? Icons.visibility_off : Icons.visibility, color: Colors.white,),
+                      onPressed: _toggleVisibility,
+                      icon: Icon(
+                        _isHidden ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 30),
-
-              // Tampilan kotak persegi
               Container(
                 height: 150,
                 child: ListView(
@@ -168,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     for (int i = 0; i < 5; i++)
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 5),
-                        padding: EdgeInsets.all(800),
+                        padding: EdgeInsets.all(10),
                         width: 150,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -187,17 +216,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
-              // Tampilan kotak persegi panjang dengan foto di dalamnya dan dapat discroll ke bawah
               Container(
                 height: 250,
-                padding: EdgeInsets.only(top: 20), // Tambahkan padding di bagian atas ListView
+                padding: EdgeInsets.only(top: 20),
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
                     for (int i = 0; i < 3; i++)
                       Container(
-                        margin: EdgeInsets.symmetric(vertical: 13, horizontal: 20), // Tambahkan margin kanan dan kiri
+                        margin: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
                         width: double.infinity,
                         height: 200,
                         decoration: BoxDecoration(
@@ -215,158 +242,168 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'data/sm.jpg', // Ubah dengan path gambar sesuai kebutuhan
-                            fit: BoxFit.cover, // Sesuaikan dengan kebutuhan Anda
+                            'data/sm.jpg',
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
                   ],
                 ),
               ),
+              if (_errorMessage.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    _errorMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
             ],
           ),
         ],
       ),
       bottomNavigationBar: Container(
-  decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: const Color.fromARGB(255, 171, 169, 169).withOpacity(0.5), // Warna shadow
-        spreadRadius: 5, // Jarak shadow
-        blurRadius: 7, // Tingkat kabur shadow
-        offset: Offset(0, 3), // Offset shadow
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 10,
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    print("Top Up clicked");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_plus.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Plus",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Riwayat clicked");
+                    Navigator.pushNamed(context, "/riwayattransaksi");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_riwayat.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Riwayat",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Home clicked");
+                    Navigator.pushNamed(context, "/beranda");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_beranda.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Beranda",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("klik aduan");
+                    Navigator.pushNamed(context, "/aduan");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_aduan.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Aduan",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Profile clicked");
+                    Navigator.pushNamed(context, "/profile");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: AssetImage('assets/images/orang1.jpg'),
+                      ),
+                      Text(
+                        "Profil",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-    ],
-  ),
-  child: BottomAppBar(
-    color: Color.fromARGB(255, 255, 255, 255),
-    child: Container(
-      height: 50,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GestureDetector(
-            onTap: () {
-              print("Icon plus di klik");
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'data/icon_plus.png',
-                  width: 30, 
-                  height: 30, 
-                ),
-                Text(
-                "Plus",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 100, 98, 98),
-                ),
-              ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              print("riwayat di klik");
-              Navigator.pushNamed(context, "/riwayattransaksi");
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'data/icon_riwayat.png', // Ganti dengan path gambar ikon riwayat
-                  width: 30, // Atur lebar ikon
-                  height: 30, // Atur tinggi ikon
-                ),
-                Text(
-                "Riwayat",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 100, 98, 98),
-                ),
-              ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              // Aksi saat ikon beranda diklik
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'data/icon_beranda.png', // Ganti dengan path gambar ikon beranda
-                  width: 30, // Atur lebar ikon
-                  height: 30, // Atur tinggi ikon
-                ),
-                Text(
-                "Beranda",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 100, 98, 98),
-                ),
-              ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              print("aduan di klik");
-              Navigator.pushNamed(context, "/aduan");
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'data/icon_aduan.png', // Ganti dengan path gambar ikon aduan
-                  width: 30, // Atur lebar ikon
-                  height: 30, // Atur tinggi ikon
-                ),
-                Text(
-                "Aduan",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 100, 98, 98),
-                ),
-              ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              // Aksi saat foto profile (avatar) diklik
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  // Icon profile (avatar)
-                  radius: 15,
-                  backgroundImage: AssetImage('assets/images/orang1.jpg'), // Ubah dengan path gambar foto Anda
-                ),
-                Text(
-                "Profil",
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 100, 98, 98),
-                ),
-              ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-),
     );
   }
 }

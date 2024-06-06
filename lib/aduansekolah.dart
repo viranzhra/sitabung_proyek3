@@ -73,13 +73,13 @@ class _AduanPageState extends State<AduanPage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF1C1F71),
         title: Text(
-          'ADUAN',
+          'ADUAN SEKOLAH',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            // Tambahkan fungsionalitas untuk tombol kembali di sini
+            Navigator.pop(context);
           },
         ),
       ),

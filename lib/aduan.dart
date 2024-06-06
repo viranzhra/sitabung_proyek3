@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'aduansekolah.dart';
+import 'aduantabungan.dart';
 import 'beranda.dart';
 
 void main() {
@@ -36,93 +38,241 @@ class Aduan extends StatelessWidget {
               SizedBox(
                 height: 20,
               ), // Memberikan jarak antara AppBar dan Container
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .center, // Posisikan konten secara horizontal di tengah
-                  crossAxisAlignment: CrossAxisAlignment
-                      .center, // Posisikan konten secara vertikal di tengah
-                  children: [
-                    Icon(
-                      Icons.school, // Icon sekolah
-                      color: Colors.white, // Warna ikon putih
-                      size: 60,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ), // Memberikan jarak antara ikon dan teks
-                    Text(
-                      'SEKOLAH',
-                      style: TextStyle(
-                        color: Colors.white, // Warna teks putih
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AduanPage()),
+                  );
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.school,
+                        color: Colors.white,
+                        size: 60,
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'SEKOLAH',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  width: 300,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Colors.blue[300]!, Colors.blue[700]!],
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20,
-                ), // Memberikan margin horizontal
-                width: 300,
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), // Menambahkan radius
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.blue[300]!,
-                      Colors.blue[700]!
-                    ], // Warna gradasi dari muda ke tua
                   ),
                 ),
               ),
               SizedBox(
                 height: 20,
-              ), // Memberikan jarak antara dua Container
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .center, // Posisikan konten secara horizontal di tengah
-                  crossAxisAlignment: CrossAxisAlignment
-                      .center, // Posisikan konten secara vertikal di tengah
-                  children: [
-                    Icon(
-                      Icons.account_balance_wallet, // Icon tabungan
-                      color: Colors.white,
-                      size: 60, // Warna ikon putih
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ), // Memberikan jarak antara ikon dan teks
-                    Text(
-                      'TABUNGAN',
-                      style: TextStyle(
-                        color: Colors.white, // Warna teks putih
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AduanTabungan()),
+                  );
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet,
+                        color: Colors.white,
+                        size: 60,
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'TABUNGAN',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  width: 300,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Colors.blue[300]!, Colors.blue[700]!],
                     ),
-                  ],
-                ),
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20,
-                ), // Memberikan margin horizontal
-                width: 300,
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), // Menambahkan radius
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.blue[300]!,
-                      Colors.blue[700]!
-                    ], // Warna gradasi dari muda ke tua
                   ),
                 ),
               ),
             ],
           ),
         ),
+        bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 10,
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    print("Top Up clicked");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_plus.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Plus",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Riwayat clicked");
+                    Navigator.pushNamed(context, "/riwayattransaksi");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_riwayat.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Riwayat",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Home clicked");
+                    Navigator.pushNamed(context, "/beranda");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_beranda.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Beranda",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("klik aduan");
+                    Navigator.pushNamed(context, "/aduan");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'data/icon_aduan.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                      Text(
+                        "Aduan",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Profile clicked");
+                    Navigator.pushNamed(context, "/profile");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: AssetImage('assets/images/orang1.jpg'),
+                      ),
+                      Text(
+                        "Profil",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 100, 98, 98),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
+    )
     );
   }
 }

@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<String> login(String username, String password) async {
-    String url = 'http://20.20.20.74/api_sitabung/login.php';
+    String url = 'http://192.168.148.138/api_sitabung/login.php';
     final response = await http.post(Uri.parse(url), body: {
       "username": username,
       "password": password,

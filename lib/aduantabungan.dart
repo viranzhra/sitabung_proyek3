@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AduanPage(),
+      home: AduanTabungan(),
     );
   }
 }
 
-class AduanPage extends StatefulWidget {
+class AduanTabungan extends StatefulWidget {
   @override
-  _AduanPageState createState() => _AduanPageState();
+  _AduanTabunganState createState() => _AduanTabunganState();
 }
 
-class _AduanPageState extends State<AduanPage> {
+class _AduanTabunganState extends State<AduanTabungan> {
   File? _selectedFile;
   String _fileName = 'No File Chosen';
 
@@ -75,13 +75,13 @@ class _AduanPageState extends State<AduanPage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF1C1F71),
         title: Text(
-          'ADUAN',
+          'ADUAN TABUNGAN',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            // Tambahkan fungsionalitas untuk tombol kembali di sini
+            Navigator.pop(context);
           },
         ),
       ),
