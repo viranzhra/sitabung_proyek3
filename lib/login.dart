@@ -3,15 +3,21 @@ import 'package:http/http.dart' as http;
 import 'beranda.dart';
 
 void main() {
-  runApp(BelajarFlutter());
+  runApp(const BelajarFlutter());
 }
 
 class BelajarFlutter extends StatelessWidget {
+  const BelajarFlutter({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: const Scaffold(
+        body: Center(
+          child: LoginScreen(),
+        ),
+      ),
       routes: {
         "/beranda": (context) => MyApp(),
       },
@@ -20,7 +26,10 @@ class BelajarFlutter extends StatelessWidget {
 }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -30,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _usernameErrorText = '';
-  String _passwordErrorText = '';
+  final String _passwordErrorText = '';
 
   @override
   void dispose() {
@@ -40,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<String> login(String username, String password) async {
-    String url = 'http://192.168.148.138/api_sitabung/login.php';
+    String url = 'http://192.168.0.9/api_sitabung/login.php';
     final response = await http.post(Uri.parse(url), body: {
       "username": username,
       "password": password,
@@ -63,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text(content),
           actions: <Widget>[
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
                 if (onOkPressed != null) {
@@ -86,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
       filled: true,
       fillColor: Colors.white,
       hintText: hintText,
-      contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       suffixIcon: suffixIcon,
       errorText: errorText,
     );
@@ -100,14 +109,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Welcome",
                   style: TextStyle(
                     fontSize: 30,
@@ -115,19 +124,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color.fromRGBO(28, 31, 113, 1),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Image.asset(
                   'assets/images/logonew.png',
                   height: 200,
                   width: 200,
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Username",
                         style: TextStyle(
                           fontSize: 14,
@@ -136,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -145,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 1,
                               blurRadius: 6,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -153,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _usernameController,
                           decoration: _inputDecoration(
                             hintText: "Masukkan username anda",
-                            suffixIcon: Icon(Icons.person, color: Colors.black),
+                            suffixIcon: const Icon(Icons.person, color: Colors.black),
                             errorText: _usernameErrorText.isNotEmpty ? _usernameErrorText : null,
                           ),
                           onChanged: (value) {
@@ -169,11 +178,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Password",
                         style: TextStyle(
                           fontSize: 14,
@@ -182,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -191,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.grey.withOpacity(0.5),
                               spreadRadius: 1,
                               blurRadius: 6,
-                              offset: Offset(0, 6),
+                              offset: const Offset(0, 6),
                             ),
                           ],
                         ),
@@ -220,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -243,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _isLoading ? null : () async {
                     setState(() {
@@ -254,18 +263,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       _isLoading = false;
                     });
                     if (result == "success") {
+                      // ignore: use_build_context_synchronously
                       showAlertDialog(context, "Login Successful", "You have successfully logged in", onOkPressed: () {
                         Navigator.pushNamed(context, "/beranda");
                       });
                     } else {
+                      // ignore: use_build_context_synchronously
                       showAlertDialog(context, "Login Failed", "Username atau password salah");
                     }
                   },
+                  // ignore: sort_child_properties_last
                   child: _isLoading
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                         )
-                      : Text(
+                      : const Text(
                           "LOGIN",
                           style: TextStyle(
                             fontSize: 18,
@@ -275,20 +287,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     minimumSize: Size(screenWidth * 1.5, 0),
-                    backgroundColor: Color.fromRGBO(28, 31, 113, 1),
+                    backgroundColor: const Color.fromRGBO(28, 31, 113, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 InkWell(
                   onTap: () {
                     // Tambahkan logika yang ingin Anda jalankan saat tautan diklik di sini
                   },
-                  child: Text(
+                  child: const Text(
                     "Forget Password?",
                     style: TextStyle(
                       fontSize: 12,

@@ -3,7 +3,6 @@ import 'riwayattransaksi.dart';
 import 'dart:convert';
 import 'aduan.dart';
 import 'package:http/http.dart' as http;
-
 import 'profile.dart';
 
 void main() {
@@ -33,8 +32,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isHidden = true;
-  String _nama = "Loading...";
-  int _total = 0;
+  String _nama = "Vira Nur Zahra";
+  String _total = "40.000";
   String _errorMessage = '';
 
   @override
@@ -46,15 +45,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetchData() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.148.138/api_sitabung/beranda.php'), // Sesuaikan dengan alamat API Anda
+        Uri.parse('http://192.168.56.138/api_sitabung/beranda.php'), // Sesuaikan dengan alamat API Anda
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'username': 'vira', 'password': 'password123'}),
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        print('Response data: $data'); // Debugging output
+
         setState(() {
-          _nama = data['nama'];
+          _nama = data['nama_murid'];
           _total = data['total'];
           _errorMessage = '';
         });
